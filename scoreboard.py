@@ -45,8 +45,7 @@ class Scoreboard:
             ValueError: If the provided scores are negative.
         """
         self.validate_match_index(match_index)
-        if home_score < 0 or away_score < 0:
-            raise ValueError("Scores cannot be negative")
+        self.validate_scores(home_score, away_score)
         match = self.matches[match_index]
         match.home_score = home_score
         match.away_score = away_score
@@ -61,8 +60,7 @@ class Scoreboard:
         Raises:
             IndexError: If the match index is invalid.
         """
-        if match_index < 0 or match_index >= len(self.matches):
-            raise IndexError("Invalid match index")
+        self.validate_match_index(match_index)
         del self.matches[match_index]
 
     def get_summary(self):
@@ -90,3 +88,17 @@ class Scoreboard:
         """
         if match_index < 0 or match_index >= len(self.matches):
             raise IndexError("Invalid match index")
+
+    def validate_scores(self, home_score, away_score):
+        """
+        Validates the scores to ensure they are not negative.
+
+        Args:
+            home_score (int): The home team score.
+            away_score (int): The away team score.
+
+        Raises:
+            ValueError: If either of the scores is negative.
+        """
+        if home_score < 0 or away_score < 0:
+            raise ValueError("Scores cannot be negative")
